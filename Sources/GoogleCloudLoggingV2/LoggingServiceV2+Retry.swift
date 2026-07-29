@@ -64,14 +64,14 @@ extension Clients {
 
     public func writeLogEntries(
       request: WriteLogEntriesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.WriteLogEntriesResponse {
+    ) async throws -> GoogleCloudLoggingV2.WriteLogEntriesResponse {
       try await self._intercept(
         request: request,
         options: options,
         idempotent: false,
         action: {
           (r: WriteLogEntriesRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleLoggingV2.WriteLogEntriesResponse
+            -> GoogleCloudLoggingV2.WriteLogEntriesResponse
           in
           return try await self.inner.writeLogEntries(request: r, options: o)
         })
@@ -79,14 +79,14 @@ extension Clients {
 
     public func listLogEntries(
       request: ListLogEntriesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListLogEntriesResponse {
+    ) async throws -> GoogleCloudLoggingV2.ListLogEntriesResponse {
       try await self._intercept(
         request: request,
         options: options,
         idempotent: false,
         action: {
           (r: ListLogEntriesRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleLoggingV2.ListLogEntriesResponse
+            -> GoogleCloudLoggingV2.ListLogEntriesResponse
           in
           return try await self.inner.listLogEntries(request: r, options: o)
         })
@@ -94,14 +94,14 @@ extension Clients {
 
     public func listMonitoredResourceDescriptors(
       request: ListMonitoredResourceDescriptorsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListMonitoredResourceDescriptorsResponse {
+    ) async throws -> GoogleCloudLoggingV2.ListMonitoredResourceDescriptorsResponse {
       try await self._intercept(
         request: request,
         options: options,
         idempotent: true,
         action: {
           (r: ListMonitoredResourceDescriptorsRequest, o: GoogleCloudGax.RequestOptions)
-            async throws -> GoogleLoggingV2.ListMonitoredResourceDescriptorsResponse
+            async throws -> GoogleCloudLoggingV2.ListMonitoredResourceDescriptorsResponse
           in
           return try await self.inner.listMonitoredResourceDescriptors(request: r, options: o)
         })
@@ -109,14 +109,14 @@ extension Clients {
 
     public func listLogs(
       request: ListLogsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListLogsResponse {
+    ) async throws -> GoogleCloudLoggingV2.ListLogsResponse {
       try await self._intercept(
         request: request,
         options: options,
         idempotent: true,
         action: {
           (r: ListLogsRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleLoggingV2.ListLogsResponse
+            -> GoogleCloudLoggingV2.ListLogsResponse
           in
           return try await self.inner.listLogs(request: r, options: o)
         })
@@ -124,14 +124,14 @@ extension Clients {
 
     public func tailLogEntries(
       request: TailLogEntriesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.TailLogEntriesResponse {
+    ) async throws -> GoogleCloudLoggingV2.TailLogEntriesResponse {
       try await self._intercept(
         request: request,
         options: options,
         idempotent: false,
         action: {
           (r: TailLogEntriesRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleLoggingV2.TailLogEntriesResponse
+            -> GoogleCloudLoggingV2.TailLogEntriesResponse
           in
           return try await self.inner.tailLogEntries(request: r, options: o)
         })

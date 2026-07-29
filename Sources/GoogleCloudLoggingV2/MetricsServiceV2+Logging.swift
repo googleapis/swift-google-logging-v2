@@ -18,22 +18,21 @@ import Foundation
 #if canImport(FoundationNetworking)
   import FoundationNetworking
 #endif
-import GoogleApi
 import GoogleCloudWkt
 import GoogleLongRunning
 import GoogleCloudGax
 import struct Logging.Logger
 
 extension Clients {
-  final class LoggingServiceV2Logging: LoggingServiceV2Stub {
-    let inner: any LoggingServiceV2Stub
+  final class MetricsServiceV2Logging: MetricsServiceV2Stub {
+    let inner: any MetricsServiceV2Stub
     let logger: Logger
 
-    public init(_ inner: any LoggingServiceV2Stub, logger: Logger) {
+    public init(_ inner: any MetricsServiceV2Stub, logger: Logger) {
       var logger = logger
       logger[metadataKey: "gcp.artifact.id"] = "google-logging-v2"
       logger[metadataKey: "gcp.client.service"] = "logging"
-      logger[metadataKey: "gcp.experimental.swift.client"] = "LoggingServiceV2"
+      logger[metadataKey: "gcp.experimental.swift.client"] = "MetricsServiceV2"
       self.inner = inner
       self.logger = logger
     }
@@ -58,90 +57,76 @@ extension Clients {
       }
     }
 
-    public func deleteLog(
-      request: DeleteLogRequest, options: GoogleCloudGax.RequestOptions
+    public func listLogMetrics(
+      request: ListLogMetricsRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.ListLogMetricsResponse {
+      try await self._intercept(
+        request: request,
+        options: options,
+        name: "listLogMetrics",
+        action: {
+          (r: ListLogMetricsRequest, o: GoogleCloudGax.RequestOptions) async throws
+            -> GoogleCloudLoggingV2.ListLogMetricsResponse
+          in
+          return try await self.inner.listLogMetrics(request: r, options: o)
+        })
+    }
+
+    public func getLogMetric(
+      request: GetLogMetricRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.LogMetric {
+      try await self._intercept(
+        request: request,
+        options: options,
+        name: "getLogMetric",
+        action: {
+          (r: GetLogMetricRequest, o: GoogleCloudGax.RequestOptions) async throws
+            -> GoogleCloudLoggingV2.LogMetric
+          in
+          return try await self.inner.getLogMetric(request: r, options: o)
+        })
+    }
+
+    public func createLogMetric(
+      request: CreateLogMetricRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.LogMetric {
+      try await self._intercept(
+        request: request,
+        options: options,
+        name: "createLogMetric",
+        action: {
+          (r: CreateLogMetricRequest, o: GoogleCloudGax.RequestOptions) async throws
+            -> GoogleCloudLoggingV2.LogMetric
+          in
+          return try await self.inner.createLogMetric(request: r, options: o)
+        })
+    }
+
+    public func updateLogMetric(
+      request: UpdateLogMetricRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.LogMetric {
+      try await self._intercept(
+        request: request,
+        options: options,
+        name: "updateLogMetric",
+        action: {
+          (r: UpdateLogMetricRequest, o: GoogleCloudGax.RequestOptions) async throws
+            -> GoogleCloudLoggingV2.LogMetric
+          in
+          return try await self.inner.updateLogMetric(request: r, options: o)
+        })
+    }
+
+    public func deleteLogMetric(
+      request: DeleteLogMetricRequest, options: GoogleCloudGax.RequestOptions
     ) async throws {
       try await self._intercept(
         request: request,
         options: options,
-        name: "deleteLog",
-        action: { (r: DeleteLogRequest, o: GoogleCloudGax.RequestOptions) async throws -> Void in
-          return try await self.inner.deleteLog(request: r, options: o)
-        })
-    }
-
-    public func writeLogEntries(
-      request: WriteLogEntriesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.WriteLogEntriesResponse {
-      try await self._intercept(
-        request: request,
-        options: options,
-        name: "writeLogEntries",
+        name: "deleteLogMetric",
         action: {
-          (r: WriteLogEntriesRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleLoggingV2.WriteLogEntriesResponse
-          in
-          return try await self.inner.writeLogEntries(request: r, options: o)
-        })
-    }
-
-    public func listLogEntries(
-      request: ListLogEntriesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListLogEntriesResponse {
-      try await self._intercept(
-        request: request,
-        options: options,
-        name: "listLogEntries",
-        action: {
-          (r: ListLogEntriesRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleLoggingV2.ListLogEntriesResponse
-          in
-          return try await self.inner.listLogEntries(request: r, options: o)
-        })
-    }
-
-    public func listMonitoredResourceDescriptors(
-      request: ListMonitoredResourceDescriptorsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListMonitoredResourceDescriptorsResponse {
-      try await self._intercept(
-        request: request,
-        options: options,
-        name: "listMonitoredResourceDescriptors",
-        action: {
-          (r: ListMonitoredResourceDescriptorsRequest, o: GoogleCloudGax.RequestOptions)
-            async throws -> GoogleLoggingV2.ListMonitoredResourceDescriptorsResponse
-          in
-          return try await self.inner.listMonitoredResourceDescriptors(request: r, options: o)
-        })
-    }
-
-    public func listLogs(
-      request: ListLogsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListLogsResponse {
-      try await self._intercept(
-        request: request,
-        options: options,
-        name: "listLogs",
-        action: {
-          (r: ListLogsRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleLoggingV2.ListLogsResponse
-          in
-          return try await self.inner.listLogs(request: r, options: o)
-        })
-    }
-
-    public func tailLogEntries(
-      request: TailLogEntriesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.TailLogEntriesResponse {
-      try await self._intercept(
-        request: request,
-        options: options,
-        name: "tailLogEntries",
-        action: {
-          (r: TailLogEntriesRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleLoggingV2.TailLogEntriesResponse
-          in
-          return try await self.inner.tailLogEntries(request: r, options: o)
+          (r: DeleteLogMetricRequest, o: GoogleCloudGax.RequestOptions) async throws -> Void in
+          return try await self.inner.deleteLogMetric(request: r, options: o)
         })
     }
 

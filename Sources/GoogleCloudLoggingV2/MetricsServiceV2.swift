@@ -43,7 +43,7 @@ public class MetricsServiceV2Client: Clients.MetricsServiceV2Protocol {
   /// @Snippet(path: "MetricsServiceV2_ListLogMetrics")
   public func listLogMetrics(
     request: ListLogMetricsRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleLoggingV2.ListLogMetricsResponse {
+  ) async throws -> GoogleCloudLoggingV2.ListLogMetricsResponse {
     try await self.inner.listLogMetrics(request: request, options: options)
   }
 
@@ -53,7 +53,8 @@ public class MetricsServiceV2Client: Clients.MetricsServiceV2Protocol {
   public func listLogMetrics(
     byItem: ListLogMetricsRequest, options: GoogleCloudGax.RequestOptions
   ) throws -> any AsyncSequence<LogMetric, Swift.Error> {
-    let listRpc = { (token: Swift.String) async throws -> GoogleLoggingV2.ListLogMetricsResponse in
+    let listRpc = {
+      (token: Swift.String) async throws -> GoogleCloudLoggingV2.ListLogMetricsResponse in
       var request = byItem
       request.pageToken = token
       return try await self.listLogMetrics(request: request, options: options)
@@ -66,7 +67,7 @@ public class MetricsServiceV2Client: Clients.MetricsServiceV2Protocol {
   /// @Snippet(path: "MetricsServiceV2_GetLogMetric")
   public func getLogMetric(
     request: GetLogMetricRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleLoggingV2.LogMetric {
+  ) async throws -> GoogleCloudLoggingV2.LogMetric {
     try await self.inner.getLogMetric(request: request, options: options)
   }
 
@@ -75,7 +76,7 @@ public class MetricsServiceV2Client: Clients.MetricsServiceV2Protocol {
   /// @Snippet(path: "MetricsServiceV2_CreateLogMetric")
   public func createLogMetric(
     request: CreateLogMetricRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleLoggingV2.LogMetric {
+  ) async throws -> GoogleCloudLoggingV2.LogMetric {
     try await self.inner.createLogMetric(request: request, options: options)
   }
 
@@ -84,7 +85,7 @@ public class MetricsServiceV2Client: Clients.MetricsServiceV2Protocol {
   /// @Snippet(path: "MetricsServiceV2_UpdateLogMetric")
   public func updateLogMetric(
     request: UpdateLogMetricRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleLoggingV2.LogMetric {
+  ) async throws -> GoogleCloudLoggingV2.LogMetric {
     try await self.inner.updateLogMetric(request: request, options: options)
   }
 
@@ -157,7 +158,7 @@ extension Clients {
   public protocol MetricsServiceV2Protocol {
     /// See `MetricsServiceV2Client.listLogMetrics`.
     func listLogMetrics(request: ListLogMetricsRequest) async throws
-      -> GoogleLoggingV2.ListLogMetricsResponse
+      -> GoogleCloudLoggingV2.ListLogMetricsResponse
 
     /// See `MetricsServiceV2Client.listLogMetrics`.
     func listLogMetrics(
@@ -170,30 +171,32 @@ extension Clients {
     ) throws -> any AsyncSequence<LogMetric, Swift.Error>
 
     /// See `MetricsServiceV2Client.getLogMetric`.
-    func getLogMetric(request: GetLogMetricRequest) async throws -> GoogleLoggingV2.LogMetric
+    func getLogMetric(request: GetLogMetricRequest) async throws -> GoogleCloudLoggingV2.LogMetric
 
     /// See `MetricsServiceV2Client.getLogMetric`.
     func getLogMetric(
       metricName: Swift.String,
-    ) async throws -> GoogleLoggingV2.LogMetric
+    ) async throws -> GoogleCloudLoggingV2.LogMetric
 
     /// See `MetricsServiceV2Client.createLogMetric`.
-    func createLogMetric(request: CreateLogMetricRequest) async throws -> GoogleLoggingV2.LogMetric
+    func createLogMetric(request: CreateLogMetricRequest) async throws
+      -> GoogleCloudLoggingV2.LogMetric
 
     /// See `MetricsServiceV2Client.createLogMetric`.
     func createLogMetric(
       parent: Swift.String,
       metric: LogMetric?,
-    ) async throws -> GoogleLoggingV2.LogMetric
+    ) async throws -> GoogleCloudLoggingV2.LogMetric
 
     /// See `MetricsServiceV2Client.updateLogMetric`.
-    func updateLogMetric(request: UpdateLogMetricRequest) async throws -> GoogleLoggingV2.LogMetric
+    func updateLogMetric(request: UpdateLogMetricRequest) async throws
+      -> GoogleCloudLoggingV2.LogMetric
 
     /// See `MetricsServiceV2Client.updateLogMetric`.
     func updateLogMetric(
       metricName: Swift.String,
       metric: LogMetric?,
-    ) async throws -> GoogleLoggingV2.LogMetric
+    ) async throws -> GoogleCloudLoggingV2.LogMetric
 
     /// See `MetricsServiceV2Client.deleteLogMetric`.
     func deleteLogMetric(request: DeleteLogMetricRequest) async throws
@@ -229,7 +232,7 @@ extension Clients {
     /// See `MetricsServiceV2Client.listLogMetrics`.
     func listLogMetrics(
       request: ListLogMetricsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListLogMetricsResponse
+    ) async throws -> GoogleCloudLoggingV2.ListLogMetricsResponse
 
     /// See `MetricsServiceV2Client.listLogMetrics`.
     func listLogMetrics(
@@ -239,17 +242,17 @@ extension Clients {
     /// See `MetricsServiceV2Client.getLogMetric`.
     func getLogMetric(
       request: GetLogMetricRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogMetric
+    ) async throws -> GoogleCloudLoggingV2.LogMetric
 
     /// See `MetricsServiceV2Client.createLogMetric`.
     func createLogMetric(
       request: CreateLogMetricRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogMetric
+    ) async throws -> GoogleCloudLoggingV2.LogMetric
 
     /// See `MetricsServiceV2Client.updateLogMetric`.
     func updateLogMetric(
       request: UpdateLogMetricRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogMetric
+    ) async throws -> GoogleCloudLoggingV2.LogMetric
 
     /// See `MetricsServiceV2Client.deleteLogMetric`.
     func deleteLogMetric(
@@ -276,14 +279,14 @@ extension Clients {
 // Default implementations
 extension Clients.MetricsServiceV2Protocol {
   public func listLogMetrics(request: ListLogMetricsRequest) async throws
-    -> GoogleLoggingV2.ListLogMetricsResponse
+    -> GoogleCloudLoggingV2.ListLogMetricsResponse
   {
     try await self.listLogMetrics(request: request, options: .init())
   }
 
   public func listLogMetrics(
     request: ListLogMetricsRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleLoggingV2.ListLogMetricsResponse {
+  ) async throws -> GoogleCloudLoggingV2.ListLogMetricsResponse {
     throw GoogleCloudGax.RequestError.unimplemented
   }
 
@@ -296,7 +299,8 @@ extension Clients.MetricsServiceV2Protocol {
   public func listLogMetrics(
     byItem: ListLogMetricsRequest, options: GoogleCloudGax.RequestOptions
   ) throws -> any AsyncSequence<LogMetric, Swift.Error> {
-    let listRpc = { (token: Swift.String) async throws -> GoogleLoggingV2.ListLogMetricsResponse in
+    let listRpc = {
+      (token: Swift.String) async throws -> GoogleCloudLoggingV2.ListLogMetricsResponse in
       throw GoogleCloudGax.RequestError.unimplemented
     }
     return GoogleCloudGax.PaginatedResponseSequence(listRpc: listRpc)
@@ -311,19 +315,21 @@ extension Clients.MetricsServiceV2Protocol {
     return try self.listLogMetrics(byItem: request)
   }
 
-  public func getLogMetric(request: GetLogMetricRequest) async throws -> GoogleLoggingV2.LogMetric {
+  public func getLogMetric(request: GetLogMetricRequest) async throws
+    -> GoogleCloudLoggingV2.LogMetric
+  {
     try await self.getLogMetric(request: request, options: .init())
   }
 
   public func getLogMetric(
     request: GetLogMetricRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleLoggingV2.LogMetric {
+  ) async throws -> GoogleCloudLoggingV2.LogMetric {
     throw GoogleCloudGax.RequestError.unimplemented
   }
 
   public func getLogMetric(
     metricName: Swift.String,
-  ) async throws -> GoogleLoggingV2.LogMetric {
+  ) async throws -> GoogleCloudLoggingV2.LogMetric {
     let request = GetLogMetricRequest().with {
       $0.metricName = metricName
     }
@@ -331,21 +337,21 @@ extension Clients.MetricsServiceV2Protocol {
   }
 
   public func createLogMetric(request: CreateLogMetricRequest) async throws
-    -> GoogleLoggingV2.LogMetric
+    -> GoogleCloudLoggingV2.LogMetric
   {
     try await self.createLogMetric(request: request, options: .init())
   }
 
   public func createLogMetric(
     request: CreateLogMetricRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleLoggingV2.LogMetric {
+  ) async throws -> GoogleCloudLoggingV2.LogMetric {
     throw GoogleCloudGax.RequestError.unimplemented
   }
 
   public func createLogMetric(
     parent: Swift.String,
     metric: LogMetric?,
-  ) async throws -> GoogleLoggingV2.LogMetric {
+  ) async throws -> GoogleCloudLoggingV2.LogMetric {
     let request = CreateLogMetricRequest().with {
       $0.parent = parent
       $0.metric = metric
@@ -354,21 +360,21 @@ extension Clients.MetricsServiceV2Protocol {
   }
 
   public func updateLogMetric(request: UpdateLogMetricRequest) async throws
-    -> GoogleLoggingV2.LogMetric
+    -> GoogleCloudLoggingV2.LogMetric
   {
     try await self.updateLogMetric(request: request, options: .init())
   }
 
   public func updateLogMetric(
     request: UpdateLogMetricRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleLoggingV2.LogMetric {
+  ) async throws -> GoogleCloudLoggingV2.LogMetric {
     throw GoogleCloudGax.RequestError.unimplemented
   }
 
   public func updateLogMetric(
     metricName: Swift.String,
     metric: LogMetric?,
-  ) async throws -> GoogleLoggingV2.LogMetric {
+  ) async throws -> GoogleCloudLoggingV2.LogMetric {
     let request = UpdateLogMetricRequest().with {
       $0.metricName = metricName
       $0.metric = metric

@@ -21,52 +21,44 @@ import Foundation
 import GoogleCloudWkt
 import GoogleLongRunning
 import GoogleCloudGax
-import struct Logging.Logger
 
 extension Clients {
-  final class MetricsServiceV2Logging: MetricsServiceV2Stub {
+  final class MetricsServiceV2Retry: MetricsServiceV2Stub {
     let inner: any MetricsServiceV2Stub
-    let logger: Logger
+    let options: GoogleCloudGax.ClientOptions
 
-    public init(_ inner: any MetricsServiceV2Stub, logger: Logger) {
-      var logger = logger
-      logger[metadataKey: "gcp.artifact.id"] = "google-logging-v2"
-      logger[metadataKey: "gcp.client.service"] = "logging"
-      logger[metadataKey: "gcp.experimental.swift.client"] = "MetricsServiceV2"
+    public init(_ inner: any MetricsServiceV2Stub, options: GoogleCloudGax.ClientOptions) {
       self.inner = inner
-      self.logger = logger
+      self.options = options
     }
 
     func _intercept<Input, Output>(
       request: Input,
       options: GoogleCloudGax.RequestOptions,
-      name: Swift.String,
+      idempotent: Swift.Bool,
       action: (Input, GoogleCloudGax.RequestOptions) async throws -> Output,
     ) async throws -> Output {
-      var logger = logger
-      logger[metadataKey: "gcp.experimental.swift.request.id"] = "\(UUID())"
-      logger[metadataKey: "gcp.experimental.swift.method"] = .string(name)
-      logger.debug("enter  : \(request) \(options)")
-      do {
-        let output = try await action(request, options)
-        logger.debug("success: \(request) \(options) \(output)")
-        return output
-      } catch let error {
-        logger.debug("error  : \(request) \(options) \(error)")
-        throw error
+      let loop = GoogleCloudGax._RetryLoop(
+        options: options, withDefault: self.options, idempotent: idempotent,
+      )
+      let attempt = { (attemptTimeout: Swift.Duration?) async throws -> Output in
+        var attemptOptions = options
+        attemptOptions.attemptTimeout = attemptTimeout
+        return try await action(request, attemptOptions)
       }
+      return try await loop.run(attempt: attempt)
     }
 
     public func listLogMetrics(
       request: ListLogMetricsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListLogMetricsResponse {
+    ) async throws -> GoogleCloudLoggingV2.ListLogMetricsResponse {
       try await self._intercept(
         request: request,
         options: options,
-        name: "listLogMetrics",
+        idempotent: true,
         action: {
           (r: ListLogMetricsRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleLoggingV2.ListLogMetricsResponse
+            -> GoogleCloudLoggingV2.ListLogMetricsResponse
           in
           return try await self.inner.listLogMetrics(request: r, options: o)
         })
@@ -74,14 +66,14 @@ extension Clients {
 
     public func getLogMetric(
       request: GetLogMetricRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogMetric {
+    ) async throws -> GoogleCloudLoggingV2.LogMetric {
       try await self._intercept(
         request: request,
         options: options,
-        name: "getLogMetric",
+        idempotent: true,
         action: {
           (r: GetLogMetricRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleLoggingV2.LogMetric
+            -> GoogleCloudLoggingV2.LogMetric
           in
           return try await self.inner.getLogMetric(request: r, options: o)
         })
@@ -89,14 +81,14 @@ extension Clients {
 
     public func createLogMetric(
       request: CreateLogMetricRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogMetric {
+    ) async throws -> GoogleCloudLoggingV2.LogMetric {
       try await self._intercept(
         request: request,
         options: options,
-        name: "createLogMetric",
+        idempotent: false,
         action: {
           (r: CreateLogMetricRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleLoggingV2.LogMetric
+            -> GoogleCloudLoggingV2.LogMetric
           in
           return try await self.inner.createLogMetric(request: r, options: o)
         })
@@ -104,14 +96,14 @@ extension Clients {
 
     public func updateLogMetric(
       request: UpdateLogMetricRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogMetric {
+    ) async throws -> GoogleCloudLoggingV2.LogMetric {
       try await self._intercept(
         request: request,
         options: options,
-        name: "updateLogMetric",
+        idempotent: true,
         action: {
           (r: UpdateLogMetricRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleLoggingV2.LogMetric
+            -> GoogleCloudLoggingV2.LogMetric
           in
           return try await self.inner.updateLogMetric(request: r, options: o)
         })
@@ -123,7 +115,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "deleteLogMetric",
+        idempotent: false,
         action: {
           (r: DeleteLogMetricRequest, o: GoogleCloudGax.RequestOptions) async throws -> Void in
           return try await self.inner.deleteLogMetric(request: r, options: o)
@@ -136,7 +128,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "listOperations",
+        idempotent: true,
         action: {
           (r: GoogleLongRunning.ListOperationsRequest, o: GoogleCloudGax.RequestOptions)
             async throws -> GoogleLongRunning.ListOperationsResponse
@@ -151,7 +143,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "getOperation",
+        idempotent: true,
         action: {
           (r: GoogleLongRunning.GetOperationRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleLongRunning.Operation
@@ -166,7 +158,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "cancelOperation",
+        idempotent: false,
         action: {
           (r: GoogleLongRunning.CancelOperationRequest, o: GoogleCloudGax.RequestOptions)
             async throws -> Void in

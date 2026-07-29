@@ -27,11 +27,11 @@ extension Clients {
   protocol ConfigServiceV2Stub {
     func listBuckets(
       request: ListBucketsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListBucketsResponse
+    ) async throws -> GoogleCloudLoggingV2.ListBucketsResponse
 
     func getBucket(
       request: GetBucketRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogBucket
+    ) async throws -> GoogleCloudLoggingV2.LogBucket
 
     func createBucketAsync(
       request: CreateBucketRequest, options: GoogleCloudGax.RequestOptions
@@ -43,11 +43,11 @@ extension Clients {
 
     func createBucket(
       request: CreateBucketRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogBucket
+    ) async throws -> GoogleCloudLoggingV2.LogBucket
 
     func updateBucket(
       request: UpdateBucketRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogBucket
+    ) async throws -> GoogleCloudLoggingV2.LogBucket
 
     func deleteBucket(
       request: DeleteBucketRequest, options: GoogleCloudGax.RequestOptions
@@ -59,19 +59,19 @@ extension Clients {
 
     func listViews(
       request: ListViewsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListViewsResponse
+    ) async throws -> GoogleCloudLoggingV2.ListViewsResponse
 
     func getView(
       request: GetViewRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogView
+    ) async throws -> GoogleCloudLoggingV2.LogView
 
     func createView(
       request: CreateViewRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogView
+    ) async throws -> GoogleCloudLoggingV2.LogView
 
     func updateView(
       request: UpdateViewRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogView
+    ) async throws -> GoogleCloudLoggingV2.LogView
 
     func deleteView(
       request: DeleteViewRequest, options: GoogleCloudGax.RequestOptions
@@ -79,19 +79,19 @@ extension Clients {
 
     func listSinks(
       request: ListSinksRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListSinksResponse
+    ) async throws -> GoogleCloudLoggingV2.ListSinksResponse
 
     func getSink(
       request: GetSinkRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogSink
+    ) async throws -> GoogleCloudLoggingV2.LogSink
 
     func createSink(
       request: CreateSinkRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogSink
+    ) async throws -> GoogleCloudLoggingV2.LogSink
 
     func updateSink(
       request: UpdateSinkRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogSink
+    ) async throws -> GoogleCloudLoggingV2.LogSink
 
     func deleteSink(
       request: DeleteSinkRequest, options: GoogleCloudGax.RequestOptions
@@ -107,27 +107,27 @@ extension Clients {
 
     func listLinks(
       request: ListLinksRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListLinksResponse
+    ) async throws -> GoogleCloudLoggingV2.ListLinksResponse
 
     func getLink(
       request: GetLinkRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.Link
+    ) async throws -> GoogleCloudLoggingV2.Link
 
     func listExclusions(
       request: ListExclusionsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListExclusionsResponse
+    ) async throws -> GoogleCloudLoggingV2.ListExclusionsResponse
 
     func getExclusion(
       request: GetExclusionRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogExclusion
+    ) async throws -> GoogleCloudLoggingV2.LogExclusion
 
     func createExclusion(
       request: CreateExclusionRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogExclusion
+    ) async throws -> GoogleCloudLoggingV2.LogExclusion
 
     func updateExclusion(
       request: UpdateExclusionRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogExclusion
+    ) async throws -> GoogleCloudLoggingV2.LogExclusion
 
     func deleteExclusion(
       request: DeleteExclusionRequest, options: GoogleCloudGax.RequestOptions
@@ -135,19 +135,19 @@ extension Clients {
 
     func getCmekSettings(
       request: GetCmekSettingsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.CmekSettings
+    ) async throws -> GoogleCloudLoggingV2.CmekSettings
 
     func updateCmekSettings(
       request: UpdateCmekSettingsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.CmekSettings
+    ) async throws -> GoogleCloudLoggingV2.CmekSettings
 
     func getSettings(
       request: GetSettingsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.Settings
+    ) async throws -> GoogleCloudLoggingV2.Settings
 
     func updateSettings(
       request: UpdateSettingsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.Settings
+    ) async throws -> GoogleCloudLoggingV2.Settings
 
     func copyLogEntries(
       request: CopyLogEntriesRequest, options: GoogleCloudGax.RequestOptions
@@ -176,7 +176,7 @@ extension Clients {
 
     public func listBuckets(
       request: ListBucketsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListBucketsResponse {
+    ) async throws -> GoogleCloudLoggingV2.ListBucketsResponse {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
@@ -194,12 +194,12 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.ListBucketsResponse.self, from: data)
+        GoogleCloudLoggingV2.ListBucketsResponse.self, from: data)
     }
 
     public func getBucket(
       request: GetBucketRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogBucket {
+    ) async throws -> GoogleCloudLoggingV2.LogBucket {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -214,7 +214,7 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogBucket.self, from: data)
+        GoogleCloudLoggingV2.LogBucket.self, from: data)
     }
 
     public func createBucketAsync(
@@ -271,7 +271,7 @@ extension Clients {
 
     public func createBucket(
       request: CreateBucketRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogBucket {
+    ) async throws -> GoogleCloudLoggingV2.LogBucket {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
@@ -292,12 +292,12 @@ extension Clients {
       }
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogBucket.self, from: data)
+        GoogleCloudLoggingV2.LogBucket.self, from: data)
     }
 
     public func updateBucket(
       request: UpdateBucketRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogBucket {
+    ) async throws -> GoogleCloudLoggingV2.LogBucket {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -318,7 +318,7 @@ extension Clients {
       }
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogBucket.self, from: data)
+        GoogleCloudLoggingV2.LogBucket.self, from: data)
     }
 
     public func deleteBucket(
@@ -361,7 +361,7 @@ extension Clients {
 
     public func listViews(
       request: ListViewsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListViewsResponse {
+    ) async throws -> GoogleCloudLoggingV2.ListViewsResponse {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
@@ -379,12 +379,12 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.ListViewsResponse.self, from: data)
+        GoogleCloudLoggingV2.ListViewsResponse.self, from: data)
     }
 
     public func getView(
       request: GetViewRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogView {
+    ) async throws -> GoogleCloudLoggingV2.LogView {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -399,12 +399,12 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogView.self, from: data)
+        GoogleCloudLoggingV2.LogView.self, from: data)
     }
 
     public func createView(
       request: CreateViewRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogView {
+    ) async throws -> GoogleCloudLoggingV2.LogView {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
@@ -425,12 +425,12 @@ extension Clients {
       }
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogView.self, from: data)
+        GoogleCloudLoggingV2.LogView.self, from: data)
     }
 
     public func updateView(
       request: UpdateViewRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogView {
+    ) async throws -> GoogleCloudLoggingV2.LogView {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -451,7 +451,7 @@ extension Clients {
       }
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogView.self, from: data)
+        GoogleCloudLoggingV2.LogView.self, from: data)
     }
 
     public func deleteView(
@@ -474,7 +474,7 @@ extension Clients {
 
     public func listSinks(
       request: ListSinksRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListSinksResponse {
+    ) async throws -> GoogleCloudLoggingV2.ListSinksResponse {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
@@ -492,12 +492,12 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.ListSinksResponse.self, from: data)
+        GoogleCloudLoggingV2.ListSinksResponse.self, from: data)
     }
 
     public func getSink(
       request: GetSinkRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogSink {
+    ) async throws -> GoogleCloudLoggingV2.LogSink {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.sinkName as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.sink_name' is not set or is empty")
@@ -512,12 +512,12 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogSink.self, from: data)
+        GoogleCloudLoggingV2.LogSink.self, from: data)
     }
 
     public func createSink(
       request: CreateSinkRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogSink {
+    ) async throws -> GoogleCloudLoggingV2.LogSink {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
@@ -540,12 +540,12 @@ extension Clients {
       }
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogSink.self, from: data)
+        GoogleCloudLoggingV2.LogSink.self, from: data)
     }
 
     public func updateSink(
       request: UpdateSinkRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogSink {
+    ) async throws -> GoogleCloudLoggingV2.LogSink {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.sinkName as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.sink_name' is not set or is empty")
@@ -569,7 +569,7 @@ extension Clients {
       }
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogSink.self, from: data)
+        GoogleCloudLoggingV2.LogSink.self, from: data)
     }
 
     public func deleteSink(
@@ -638,7 +638,7 @@ extension Clients {
 
     public func listLinks(
       request: ListLinksRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListLinksResponse {
+    ) async throws -> GoogleCloudLoggingV2.ListLinksResponse {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
@@ -656,12 +656,12 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.ListLinksResponse.self, from: data)
+        GoogleCloudLoggingV2.ListLinksResponse.self, from: data)
     }
 
     public func getLink(
       request: GetLinkRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.Link {
+    ) async throws -> GoogleCloudLoggingV2.Link {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -676,12 +676,12 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.Link.self, from: data)
+        GoogleCloudLoggingV2.Link.self, from: data)
     }
 
     public func listExclusions(
       request: ListExclusionsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListExclusionsResponse {
+    ) async throws -> GoogleCloudLoggingV2.ListExclusionsResponse {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
@@ -699,12 +699,12 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.ListExclusionsResponse.self, from: data)
+        GoogleCloudLoggingV2.ListExclusionsResponse.self, from: data)
     }
 
     public func getExclusion(
       request: GetExclusionRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogExclusion {
+    ) async throws -> GoogleCloudLoggingV2.LogExclusion {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -719,12 +719,12 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogExclusion.self, from: data)
+        GoogleCloudLoggingV2.LogExclusion.self, from: data)
     }
 
     public func createExclusion(
       request: CreateExclusionRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogExclusion {
+    ) async throws -> GoogleCloudLoggingV2.LogExclusion {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
@@ -743,12 +743,12 @@ extension Clients {
       }
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogExclusion.self, from: data)
+        GoogleCloudLoggingV2.LogExclusion.self, from: data)
     }
 
     public func updateExclusion(
       request: UpdateExclusionRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogExclusion {
+    ) async throws -> GoogleCloudLoggingV2.LogExclusion {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -769,7 +769,7 @@ extension Clients {
       }
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogExclusion.self, from: data)
+        GoogleCloudLoggingV2.LogExclusion.self, from: data)
     }
 
     public func deleteExclusion(
@@ -792,7 +792,7 @@ extension Clients {
 
     public func getCmekSettings(
       request: GetCmekSettingsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.CmekSettings {
+    ) async throws -> GoogleCloudLoggingV2.CmekSettings {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -807,12 +807,12 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.CmekSettings.self, from: data)
+        GoogleCloudLoggingV2.CmekSettings.self, from: data)
     }
 
     public func updateCmekSettings(
       request: UpdateCmekSettingsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.CmekSettings {
+    ) async throws -> GoogleCloudLoggingV2.CmekSettings {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -833,12 +833,12 @@ extension Clients {
       }
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.CmekSettings.self, from: data)
+        GoogleCloudLoggingV2.CmekSettings.self, from: data)
     }
 
     public func getSettings(
       request: GetSettingsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.Settings {
+    ) async throws -> GoogleCloudLoggingV2.Settings {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -853,12 +853,12 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.Settings.self, from: data)
+        GoogleCloudLoggingV2.Settings.self, from: data)
     }
 
     public func updateSettings(
       request: UpdateSettingsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.Settings {
+    ) async throws -> GoogleCloudLoggingV2.Settings {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -879,7 +879,7 @@ extension Clients {
       }
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.Settings.self, from: data)
+        GoogleCloudLoggingV2.Settings.self, from: data)
     }
 
     public func copyLogEntries(

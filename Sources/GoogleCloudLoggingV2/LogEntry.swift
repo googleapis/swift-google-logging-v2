@@ -16,8 +16,8 @@
 
 import Foundation
 import GoogleApi
+import GoogleCloudLoggingType
 import GoogleCloudWkt
-import GoogleLoggingType
 
 /// An individual entry in a log.
 public struct LogEntry: Codable, Equatable, GoogleCloudWkt._AnyPackable,
@@ -74,7 +74,7 @@ public struct LogEntry: Codable, Equatable, GoogleCloudWkt._AnyPackable,
 
   /// Optional. The severity of the log entry. The default value is
   /// `LogSeverity.DEFAULT`.
-  public var severity: GoogleLoggingType.LogSeverity = GoogleLoggingType.LogSeverity()
+  public var severity: GoogleCloudLoggingType.LogSeverity = GoogleCloudLoggingType.LogSeverity()
 
   /// Optional. A unique identifier for the log entry. If you provide a value,
   /// then Logging considers other log entries in the same project, with the same
@@ -91,7 +91,7 @@ public struct LogEntry: Codable, Equatable, GoogleCloudWkt._AnyPackable,
 
   /// Optional. Information about the HTTP request associated with this log
   /// entry, if applicable.
-  public var httpRequest: GoogleLoggingType.HttpRequest? = nil
+  public var httpRequest: GoogleCloudLoggingType.HttpRequest? = nil
 
   /// Optional. A map of key, value pairs that provides additional information
   /// about the log entry. The labels can be user-defined or system-defined.
@@ -221,10 +221,10 @@ public struct LogEntry: Codable, Equatable, GoogleCloudWkt._AnyPackable,
       GoogleCloudWkt.Timestamp.self, forKey: .timestamp)
     self.receiveTimestamp = try container.decodeIfPresent(
       GoogleCloudWkt.Timestamp.self, forKey: .receiveTimestamp)
-    self.severity = try container.decode(GoogleLoggingType.LogSeverity.self, forKey: .severity)
+    self.severity = try container.decode(GoogleCloudLoggingType.LogSeverity.self, forKey: .severity)
     self.insertId = try container.decode(Swift.String.self, forKey: .insertId)
     self.httpRequest = try container.decodeIfPresent(
-      GoogleLoggingType.HttpRequest.self, forKey: .httpRequest)
+      GoogleCloudLoggingType.HttpRequest.self, forKey: .httpRequest)
     self.labels = try container.decode([Swift.String: Swift.String].self, forKey: .labels)
     self.operation = try container.decodeIfPresent(LogEntryOperation.self, forKey: .operation)
     self.trace = try container.decode(Swift.String.self, forKey: .trace)

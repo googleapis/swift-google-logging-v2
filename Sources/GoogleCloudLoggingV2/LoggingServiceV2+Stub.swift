@@ -18,31 +18,36 @@ import Foundation
 #if canImport(FoundationNetworking)
   import FoundationNetworking
 #endif
+import GoogleApi
 import GoogleCloudWkt
 import GoogleLongRunning
 import GoogleCloudGax
 
 extension Clients {
-  protocol MetricsServiceV2Stub {
-    func listLogMetrics(
-      request: ListLogMetricsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListLogMetricsResponse
-
-    func getLogMetric(
-      request: GetLogMetricRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogMetric
-
-    func createLogMetric(
-      request: CreateLogMetricRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogMetric
-
-    func updateLogMetric(
-      request: UpdateLogMetricRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogMetric
-
-    func deleteLogMetric(
-      request: DeleteLogMetricRequest, options: GoogleCloudGax.RequestOptions
+  protocol LoggingServiceV2Stub {
+    func deleteLog(
+      request: DeleteLogRequest, options: GoogleCloudGax.RequestOptions
     ) async throws
+
+    func writeLogEntries(
+      request: WriteLogEntriesRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.WriteLogEntriesResponse
+
+    func listLogEntries(
+      request: ListLogEntriesRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.ListLogEntriesResponse
+
+    func listMonitoredResourceDescriptors(
+      request: ListMonitoredResourceDescriptorsRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.ListMonitoredResourceDescriptorsResponse
+
+    func listLogs(
+      request: ListLogsRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.ListLogsResponse
+
+    func tailLogEntries(
+      request: TailLogEntriesRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.TailLogEntriesResponse
 
     func listOperations(
       request: GoogleLongRunning.ListOperationsRequest, options: GoogleCloudGax.RequestOptions
@@ -57,7 +62,7 @@ extension Clients {
     ) async throws
   }
 
-  class MetricsServiceV2Transport: MetricsServiceV2Stub {
+  class LoggingServiceV2Transport: LoggingServiceV2Stub {
     let inner: GoogleCloudGax.HTTPClient
 
     public init(_ options: GoogleCloudGax.ClientOptions = .init()) throws {
@@ -65,103 +70,12 @@ extension Clients {
         from: options, withDefaultEndpoint: "https://logging.googleapis.com")
     }
 
-    public func listLogMetrics(
-      request: ListLogMetricsRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.ListLogMetricsResponse {
-      let path = try { () throws -> Swift.String in
-        guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
-          throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
-        }
-        return "/v2/\(pathVariable0)/metrics"
-      }()
-      var query = [
-        URLQueryItem(name: "$alt", value: "json;enum-encoding=int")
-      ]
-      let encoder = GoogleCloudGax.QueryParameterEncoder()
-      query.append(contentsOf: try encoder.encode(request.pageToken, prefix: "pageToken"))
-      query.append(contentsOf: try encoder.encode(request.pageSize, prefix: "pageSize"))
-      var req = try await self.inner.Request(path: path, query: query)
-      req.httpMethod = "GET"
-      req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
-      let (data, _) = try await self.inner.rpc(for: req).get()
-      return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.ListLogMetricsResponse.self, from: data)
-    }
-
-    public func getLogMetric(
-      request: GetLogMetricRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogMetric {
-      let path = try { () throws -> Swift.String in
-        guard let pathVariable0 = request.metricName as Swift.String?, !pathVariable0.isEmpty else {
-          throw GoogleCloudGax.RequestError.binding("'request.metric_name' is not set or is empty")
-        }
-        return "/v2/\(pathVariable0)"
-      }()
-      let query = [
-        URLQueryItem(name: "$alt", value: "json;enum-encoding=int")
-      ]
-      var req = try await self.inner.Request(path: path, query: query)
-      req.httpMethod = "GET"
-      req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
-      let (data, _) = try await self.inner.rpc(for: req).get()
-      return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogMetric.self, from: data)
-    }
-
-    public func createLogMetric(
-      request: CreateLogMetricRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogMetric {
-      let path = try { () throws -> Swift.String in
-        guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
-          throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
-        }
-        return "/v2/\(pathVariable0)/metrics"
-      }()
-      let query = [
-        URLQueryItem(name: "$alt", value: "json;enum-encoding=int")
-      ]
-      var req = try await self.inner.Request(path: path, query: query)
-      req.httpMethod = "POST"
-      req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
-      if let body = request.metric {
-        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        req.httpBody = try JSONEncoder().encode(body)
-      }
-      let (data, _) = try await self.inner.rpc(for: req).get()
-      return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogMetric.self, from: data)
-    }
-
-    public func updateLogMetric(
-      request: UpdateLogMetricRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleLoggingV2.LogMetric {
-      let path = try { () throws -> Swift.String in
-        guard let pathVariable0 = request.metricName as Swift.String?, !pathVariable0.isEmpty else {
-          throw GoogleCloudGax.RequestError.binding("'request.metric_name' is not set or is empty")
-        }
-        return "/v2/\(pathVariable0)"
-      }()
-      let query = [
-        URLQueryItem(name: "$alt", value: "json;enum-encoding=int")
-      ]
-      var req = try await self.inner.Request(path: path, query: query)
-      req.httpMethod = "PUT"
-      req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
-      if let body = request.metric {
-        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        req.httpBody = try JSONEncoder().encode(body)
-      }
-      let (data, _) = try await self.inner.rpc(for: req).get()
-      return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleLoggingV2.LogMetric.self, from: data)
-    }
-
-    public func deleteLogMetric(
-      request: DeleteLogMetricRequest, options: GoogleCloudGax.RequestOptions
+    public func deleteLog(
+      request: DeleteLogRequest, options: GoogleCloudGax.RequestOptions
     ) async throws {
       let path = try { () throws -> Swift.String in
-        guard let pathVariable0 = request.metricName as Swift.String?, !pathVariable0.isEmpty else {
-          throw GoogleCloudGax.RequestError.binding("'request.metric_name' is not set or is empty")
+        guard let pathVariable0 = request.logName as Swift.String?, !pathVariable0.isEmpty else {
+          throw GoogleCloudGax.RequestError.binding("'request.log_name' is not set or is empty")
         }
         return "/v2/\(pathVariable0)"
       }()
@@ -172,6 +86,107 @@ extension Clients {
       req.httpMethod = "DELETE"
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       _ = try await self.inner.rpc(for: req).get()
+    }
+
+    public func writeLogEntries(
+      request: WriteLogEntriesRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.WriteLogEntriesResponse {
+      let path = try { () throws -> Swift.String in
+        return "/v2/entries:write"
+      }()
+      let query = [
+        URLQueryItem(name: "$alt", value: "json;enum-encoding=int")
+      ]
+      var req = try await self.inner.Request(path: path, query: query)
+      req.httpMethod = "POST"
+      req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
+      req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+      req.httpBody = try JSONEncoder().encode(request)
+      let (data, _) = try await self.inner.rpc(for: req).get()
+      return try GoogleCloudWkt._ProtoJSONDecoder().decode(
+        GoogleCloudLoggingV2.WriteLogEntriesResponse.self, from: data)
+    }
+
+    public func listLogEntries(
+      request: ListLogEntriesRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.ListLogEntriesResponse {
+      let path = try { () throws -> Swift.String in
+        return "/v2/entries:list"
+      }()
+      let query = [
+        URLQueryItem(name: "$alt", value: "json;enum-encoding=int")
+      ]
+      var req = try await self.inner.Request(path: path, query: query)
+      req.httpMethod = "POST"
+      req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
+      req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+      req.httpBody = try JSONEncoder().encode(request)
+      let (data, _) = try await self.inner.rpc(for: req).get()
+      return try GoogleCloudWkt._ProtoJSONDecoder().decode(
+        GoogleCloudLoggingV2.ListLogEntriesResponse.self, from: data)
+    }
+
+    public func listMonitoredResourceDescriptors(
+      request: ListMonitoredResourceDescriptorsRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.ListMonitoredResourceDescriptorsResponse {
+      let path = try { () throws -> Swift.String in
+        return "/v2/monitoredResourceDescriptors"
+      }()
+      var query = [
+        URLQueryItem(name: "$alt", value: "json;enum-encoding=int")
+      ]
+      let encoder = GoogleCloudGax.QueryParameterEncoder()
+      query.append(contentsOf: try encoder.encode(request.pageSize, prefix: "pageSize"))
+      query.append(contentsOf: try encoder.encode(request.pageToken, prefix: "pageToken"))
+      var req = try await self.inner.Request(path: path, query: query)
+      req.httpMethod = "GET"
+      req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
+      let (data, _) = try await self.inner.rpc(for: req).get()
+      return try GoogleCloudWkt._ProtoJSONDecoder().decode(
+        GoogleCloudLoggingV2.ListMonitoredResourceDescriptorsResponse.self, from: data)
+    }
+
+    public func listLogs(
+      request: ListLogsRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.ListLogsResponse {
+      let path = try { () throws -> Swift.String in
+        guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
+          throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
+        }
+        return "/v2/\(pathVariable0)/logs"
+      }()
+      var query = [
+        URLQueryItem(name: "$alt", value: "json;enum-encoding=int")
+      ]
+      let encoder = GoogleCloudGax.QueryParameterEncoder()
+      query.append(contentsOf: try encoder.encode(request.resourceNames, prefix: "resourceNames"))
+      query.append(contentsOf: try encoder.encode(request.pageSize, prefix: "pageSize"))
+      query.append(contentsOf: try encoder.encode(request.pageToken, prefix: "pageToken"))
+      var req = try await self.inner.Request(path: path, query: query)
+      req.httpMethod = "GET"
+      req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
+      let (data, _) = try await self.inner.rpc(for: req).get()
+      return try GoogleCloudWkt._ProtoJSONDecoder().decode(
+        GoogleCloudLoggingV2.ListLogsResponse.self, from: data)
+    }
+
+    public func tailLogEntries(
+      request: TailLogEntriesRequest, options: GoogleCloudGax.RequestOptions
+    ) async throws -> GoogleCloudLoggingV2.TailLogEntriesResponse {
+      let path = try { () throws -> Swift.String in
+        return "/v2/entries:tail"
+      }()
+      let query = [
+        URLQueryItem(name: "$alt", value: "json;enum-encoding=int")
+      ]
+      var req = try await self.inner.Request(path: path, query: query)
+      req.httpMethod = "POST"
+      req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
+      req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+      req.httpBody = try JSONEncoder().encode(request)
+      let (data, _) = try await self.inner.rpc(for: req).get()
+      return try GoogleCloudWkt._ProtoJSONDecoder().decode(
+        GoogleCloudLoggingV2.TailLogEntriesResponse.self, from: data)
     }
 
     public func listOperations(
